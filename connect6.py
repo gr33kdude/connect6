@@ -30,7 +30,8 @@ class Connect6():
             for direc in [1, -1]:
                 tr, tc = r + direc * dr, c + direc * dc
 
-                while self.grid[tr][tc] == piece and consecutive < 6:
+                while 0 <= tr < self.R and 0 <= tc < self.C and \
+                    self.grid[tr][tc] == piece and consecutive < 6:
                     consecutive += 1
                     tr, tc = tr + direc * dr, tc + direc * dc
 
