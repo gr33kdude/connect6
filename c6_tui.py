@@ -33,7 +33,6 @@ def main(scr):
     R, C = c6.pos(c6.R, c6.C)
     R += 1 + 1 # 0-based-to-1 + status line
     C += 1     # 0-based-to-1
-    print
     if h < R or w < C:
         raise ScreenNotBigEnoughException(R, C)
 
@@ -74,6 +73,8 @@ def main(scr):
             if c6.valid(r, c):
                 pr, pc = c6.pos(r, c)
                 scr.addch(pr, pc, ord(c6.player.upper()))
+                if c6.player == "o":
+                    scr.chgat(pr, pc-1, 3, curses.A_REVERSE)
                 c6.turn(r, c)
             else:
                 statline = "Invalid move!  "
