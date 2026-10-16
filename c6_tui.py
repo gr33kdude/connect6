@@ -1,4 +1,4 @@
-#!/usr/bin/env python
+#!/usr/bin/env python3
 
 from connect6 import Connect6
 import curses
@@ -17,7 +17,7 @@ def status_line(scr, s):
     scr.addstr(s)
     scr.move(r, c)
 
-class ScreenNotBigEnoughException():
+class ScreenNotBigEnoughException(Exception):
     def __init__(self, h, w):
         self.h = h
         self.w = w
@@ -37,7 +37,7 @@ def main(scr):
         raise ScreenNotBigEnoughException(R, C)
 
     # start the cursor in the middle of the grid
-    r, c = c6.R / 2, c6.C / 2
+    r, c = c6.R // 2, c6.C // 2
     scr.addstr(str(c6))
     scr.refresh()
 
@@ -62,7 +62,9 @@ def main(scr):
         status_line(scr, statline)
 
         scr.refresh()
-        ch = scr.getch(*c6.pos(r, c))
+
+        pos = c6.pos(r, c)
+        ch = scr.getch(*pos)
 
         if ch in move_keys.keys():
             dr, dc = move_keys[ch]
@@ -97,4 +99,4 @@ def main(scr):
 try:
     curses.wrapper(main)
 except ScreenNotBigEnoughException as e:
-    print e
+    print(e)
